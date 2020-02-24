@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="fragments/header :: meta-header"/>
+</head>
+<body>
+
+<div class="container">
+    <th:block th:insert="fragments/header :: header"/>
+
+    <div class="d-flex justify-content-start">
+        <h1 th:text="#{user.signIn}"></h1>
+    </div>
+
+    <div class="alert alert-danger" th:if="${#request.getParameter('error')}" th:text="#{user.signIn.error}">
+    </div>
+    <div class="alert alert-success" th:if="${#request.getParameter('logout')}"  th:text="#{user.signout.success}">
+    </div>
+
+    <div class="justify-content-center">
+        <form method="post" th:action="@{/login}">
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label for="username" th:text="#{user.username}"></label>
+                    <input autocomplete="off" class="form-control" id="username" name="username" type="text">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="password" th:text="#{user.password}"></label>
+                    <input autocomplete="off" class="form-control" id="password" name="password" type="password">
+                </div>
+            </div>
+            <input class="btn btn-primary" th:value="#{user.signIn}" type="submit">
+            <a class="m-lg-3" th:href="@{register}" th:text="#{user.account.noExists}"></a>
+        </form>
+    </div>
+</div>
+<th:block th:insert="fragments/footer :: footer"/>
+</body>
+</html>

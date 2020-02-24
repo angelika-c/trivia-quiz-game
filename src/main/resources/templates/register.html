@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="fragments/header :: meta-header"/>
+</head>
+<body>
+
+<div class="container">
+    <th:block th:insert="fragments/header :: header"/>
+
+    <div class="d-flex justify-content-start">
+        <h1 th:text="#{user.register}"></h1>
+    </div>
+    <div class="justify-content-center">
+        <form method="post" th:action="@{/register}" th:object="${user}">
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <label for="firstName" th:text="#{user.firstName}"></label>
+                    <input autocomplete="off" id="firstName"
+                           th:class="'form-control' + ${#fields.hasErrors('firstName') ? ' is-invalid' : ''}"
+                           th:field="*{firstName}" type="text">
+                    <div class="invalid-feedback" th:text="${#fields.errors('firstName')}"></div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="lastName" th:text="#{user.lastName}"></label>
+                    <input autocomplete="off" id="lastName"
+                           th:class="'form-control' + ${#fields.hasErrors('lastName') ? ' is-invalid' : ''}"
+                           th:field="*{lastName}" type="text">
+                    <div class="invalid-feedback" th:text="${#fields.errors('lastName')}"></div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="email" th:text="#{user.email}"></label>
+                    <input autocomplete="off" id="email"
+                           th:class="'form-control' + ${#fields.hasErrors('email') ? ' is-invalid' : ''}"
+                           th:field="*{email}" type="text">
+                    <div class="invalid-feedback" th:text="${#fields.errors('email')}"></div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label for="login" th:text="#{user.username}"></label>
+                    <input autocomplete="off" id="login"
+                           th:class="'form-control' + ${#fields.hasErrors('username') ? ' is-invalid' : ''}"
+                           th:field="*{username}" type="text">
+                    <div class="invalid-feedback" th:text="${#fields.errors('username')}"></div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="password" th:text="#{user.password}"></label>
+                    <input autocomplete="off" id="password"
+                           th:class="'form-control' + ${#fields.hasErrors('password') ? ' is-invalid' : ''}"
+                           th:field="*{password}" type="password">
+                    <div class="invalid-feedback" th:text="${#fields.errors('password')}"></div>
+                </div>
+            </div>
+                <input class="btn btn-primary" th:value="#{game.save}" type="submit">
+                <a class="m-lg-3" th:href="@{login}" th:text="#{user.account.exists}"></a>
+        </form>
+    </div>
+</div>
+<th:block th:insert="fragments/footer :: footer"/>
+</body>
+</html>
