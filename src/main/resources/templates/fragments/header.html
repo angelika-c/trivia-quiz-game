@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Languages fragment</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<th:block th:fragment="meta-header">
+    <meta charset="UTF-8">
+    <title th:text="#{application.name}"></title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+</th:block>
+
+<div th:fragment="header">
+    <div class="d-flex flex-row-reverse">
+        <a th:href="@{''(lang='en_GB')}" th:text="#{language.english}"></a>&nbsp;
+        <a th:href="@{''(lang='pl_PL')}" th:text="#{language.polish}"></a>
+    </div>
+
+    <div sec:authorize="isAuthenticated()">
+        <form method="post" th:action="@{/logout}">
+            <input th:value="#{user.signOut}" type="submit">
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

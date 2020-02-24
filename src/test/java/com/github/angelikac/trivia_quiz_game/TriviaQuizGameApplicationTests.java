@@ -1,13 +1,11 @@
 package com.github.angelikac.trivia_quiz_game;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import com.github.angelikac.trivia_quiz_game.controller.UserControllerTest;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-@SpringBootTest
-class TriviaQuizGameApplicationTests {
-
-    @Test
-    void contextLoads() {
-    }
+@RunWith(Suite.class)
+@Suite.SuiteClasses({UserControllerTest.class})
+public class TriviaQuizGameApplicationTests {
 
 }
