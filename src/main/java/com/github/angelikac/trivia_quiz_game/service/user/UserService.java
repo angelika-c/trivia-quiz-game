@@ -31,8 +31,7 @@ public class UserService {
         User entity = mapUser(userDto);
         saveUserPassword(entity);
         saveUserStatistic(entity);
-
-        return mapUserDto(entity);
+        return mapUserDto(userRepository.save(entity));
     }
 
     private void saveUserPassword(User user) {
