@@ -32,7 +32,7 @@ public class UserService {
         saveUserPassword(entity);
         saveUserStatistic(entity);
 
-        return mapUserDto(entity);
+        return mapUserDto(userRepository.save(entity));
     }
 
     private void saveUserPassword(User user) {
