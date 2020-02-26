@@ -35,12 +35,12 @@ public class UserService {
         return mapUserDto(entity);
     }
 
-    private void saveUserPassword(User user){
+    private void saveUserPassword(User user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
     }
 
-    private void saveUserStatistic(User user){
+    private void saveUserStatistic(User user) {
         Statistic statistic = new Statistic();
         statistic.setUser(user);
         statisticRepository.save(statistic);
@@ -54,8 +54,6 @@ public class UserService {
     private UserDto mapUserDto(User user) {
         return MODEL_MAPPER.map(user, UserDto.class);
     }
-
-
 
     User getByUsername(final String username) {
         return userRepository.findUserByUsernameIgnoringCase(username);
