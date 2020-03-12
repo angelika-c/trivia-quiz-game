@@ -1,6 +1,5 @@
 package com.github.angelikac.trivia_quiz_game.entity.user;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,20 +13,46 @@ import javax.persistence.Table;
 public class Statistic {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
     private int numberOfPoints;
 
-    @Column
     private int numberOfAnsweredQuestions;
 
-    @OneToOne(optional = false)
+    @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public void setUser(final User user) {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getNumberOfPoints() {
+        return numberOfPoints;
+    }
+
+    public void setNumberOfPoints(int numberOfPoints) {
+        this.numberOfPoints = numberOfPoints;
+    }
+
+    public int getNumberOfAnsweredQuestions() {
+        return numberOfAnsweredQuestions;
+    }
+
+    public void setNumberOfAnsweredQuestions(int numberOfAnsweredQuestions) {
+        this.numberOfAnsweredQuestions = numberOfAnsweredQuestions;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
         this.user = user;
     }
 }
