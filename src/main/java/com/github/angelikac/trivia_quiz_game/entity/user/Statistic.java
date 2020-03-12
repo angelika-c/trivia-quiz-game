@@ -20,7 +20,7 @@ public class Statistic {
 
     private int numberOfAnsweredQuestions;
 
-    @OneToOne(optional = false)
+    @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
