@@ -28,24 +28,30 @@ public class UserService {
     }
 
     public UserDto saveUser(UserDto userDto) {
-        User user = saveUserStatistic(userDto);
-        return MODEL_MAPPER.map(userRepository.save(user), UserDto.class);
+        User entity = mapUser(userDto);
+        saveUserPassword(entity);
+        saveUserStatistic(entity);
+        return mapUserDto(userRepository.save(entity));
     }
 
-    private User saveUserPassword(UserDto userDto){
-        User user = MODEL_MAPPER.map(userDto, User.class);
-        String encodedPassword = passwordEncoder.encode(userDto.getPassword());
+    private void saveUserPassword(User user) {
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-        return user;
     }
 
-    private User saveUserStatistic(UserDto userDto){
-        User user = saveUserPassword(userDto);
+    private void saveUserStatistic(User user) {
         Statistic statistic = new Statistic();
         statistic.setUser(user);
         statisticRepository.save(statistic);
         user.setStatistic(statistic);
-        return user;
+    }
+
+    private User mapUser(UserDto userDto) {
+        return MODEL_MAPPER.map(userDto, User.class);
+    }
+
+    private UserDto mapUserDto(User user) {
+        return MODEL_MAPPER.map(user, UserDto.class);
     }
 
     User getByUsername(final String username) {
