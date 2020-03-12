@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="fragments/header :: meta-header"/>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <th:block th:insert="fragments/header :: header"/>
+
+            <div class="d-flex flex-column mb-3">
+                <h1 class="display-3" th:text="#{application.name}"></h1>
+            </div>
+
+            <div class="d-flex justify-content-center mb-3">
+                <h1 class="display-6" th:text="#{category.name}"></h1>
+            </div>
+            <div class="d-flex justify-content-center mb-3">
+                <form method="post" th:action="@{/categorieslist}" th:object="${categoryList}">
+                </form>
+            </div>
+            <div>
+                <ul class="list-group list-group-flush">
+                    <th:block th:each="category : ${categoryList}">
+                        <div class="card shadow-sm p-1 bg-white rounded mb-3">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a th:href="@{category(id=${category.id})}"> <span
+                                        th:text="${category.getName()}"></span>
+                                    <span class="close"></span></a>
+                            </li>
+                        </div>
+                    </th:block>
+                </ul>
+                <div th:if="${categoryList.isEmpty()}">
+                    <div class="text-center" th:text="#{category.list.empty}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:insert="fragments/footer :: footer"/>
+</body>
+</html>

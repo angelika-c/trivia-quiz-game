@@ -3,11 +3,7 @@ package com.github.angelikac.trivia_quiz_game.entity.quiz;
 import com.github.angelikac.trivia_quiz_game.entity.game.Answer;
 import com.github.angelikac.trivia_quiz_game.entity.game.QuestionEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 public class UserAnswer {

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="styles/main.css">
+    <th:block th:insert="fragments/header :: meta-header"/>
+
+    <style>
+        button {
+            color: #fff;
+            background: #ccc;
+            cursor: pointer;
+            border-top: solid 2px #eaeaea;
+            border-left: solid 2px #eaeaea;
+            border-bottom: solid 2px #777;
+            border-right: solid 2px #777;
+            padding: 5px 5px;
+        }
+
+        button.down {
+            color: #000;
+            background: #0f0;
+            border-top: solid 2px #777;
+            border-left: solid 2px #777;
+            border-bottom: solid 2px #eaeaea;
+            border-right: solid 2px #eaeaea;
+        }
+
+        button.down.correct {
+            background: #0f0;
+        }
+
+        button.down.notcorrect {
+            background: #f00;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <th:block th:insert="fragments/header :: header"/>
+
+            <div class="d-flex justify-content-center mb-3">
+                <h1 class="display-3" th:text="#{application.name}"></h1>
+            </div>
+            <ul class="list-group list-group-flush">
+                <div class="card shadow-sm p-1 bg-white rounded mb-3">
+                    <li class="list-group-item justify-content-between align-items-center ">
+                        <span th:text="${questionEntity.getQuestion()}"></span>
+                        <div class="btn-group-vertical container mt-3">
+                            <label th:each="answer: ${questionEntity.getAnswers()}">
+                                <button type="button" id="toggle"
+                                        class="btn btn-primary mt-3"
+                                        th:classappend="${answer.getCorrect()} ? correct: notcorrect"
+                                        th:value="${answer.getId()}"
+                                        th:text="${answer.getAnswer()}">
+                                </button>
+                            </label>
+                        </div>
+                    </li>
+                </div>
+            </ul>
+            <div th:if="${questionEntity == null}">
+                <div class="text-center" th:text="#{question.list.empty}"></div>
+            </div>
+            <form id="answerForm"
+                  th:action="@{'/quiz/'+${quizid}+'/'+${questionNumber}+'/answer/' + ${questionEntity.id}}">
+                <div id="confirm-card" class="card shadow-sm p-1 bg-white rounded mb-3 row hidden">
+                    <div class="offset-10 col-2">
+                        <input type="hidden" value="" id="formField" name="answer">
+                        <input type="hidden" value="" id="formFieldNumberOfResponses" name="clicksCount">
+                        <button class="btn btn-primary" th:text="#{answer.accept}"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<th:block th:insert="fragments/footer :: footer"/>
+<script type="application/javascript">
+    var clicksCount = 0;
+    $(document).ready(function () {
+        $('button#toggle').click(function () {
+            if (clicksCount < 1) {
+                $(this).toggleClass("down"); /*zaznacz kliknięty guzik*/
+                var me = $(this);
+
+                var elements = document.getElementsByClassName("down"); /*pobierz wszystkie pozostałe guziki które są wciśnięte*/
+                for (var i = 0; i < elements.length; i++) {
+                    if ((elements[i] !== me.get(0))) { // znajdź guziki które nie są tym, który właśnie by zaznaczony
+                        elements[i].classList.remove("down"); // odznacz inne guziki
+                    }
+                }
+                elements = document.getElementsByClassName("down");
+                if (elements.length > 0) {
+                    document.getElementById("confirm-card").classList.remove("hidden");
+                    document.getElementById("formField").setAttribute('value', me.get(0).value);
+                } else {
+                    document.getElementById("confirm-card").classList.add("hidden");
+                }
+            }
+            clicksCount++;
+            document.getElementById("formFieldNumberOfResponses").setAttribute('value', clicksCount);
+        });
+    });
+</script>
+</body>
+</html>

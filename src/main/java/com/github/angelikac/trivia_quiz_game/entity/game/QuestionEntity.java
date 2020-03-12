@@ -25,6 +25,7 @@ public class QuestionEntity {
     @Column(name = "question_id")
     private Long id;
 
+    @Column
     private Difficulty difficulty;
 
     @Column(name = "question_text")

@@ -13,7 +13,7 @@ public class Quiz {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<UserAnswer> userAnswerList = new ArrayList<>();
 
     @ManyToOne

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="fragments/header :: meta-header"/>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <th:block th:insert="fragments/header :: header"/>
+
+            <div class="d-flex flex-column mb-3">
+                <h1 class="display-3" th:text="#{application.name}"></h1>
+            </div>
+
+            <div class="d-flex justify-content-center mb-3" >
+                <h1 class="display-6" th:text="#{difficulty.name}"></h1>
+            </div>
+            <div class="d-flex justify-content-center mb-3">
+                <form method="post" th:action="@{/levels}" th:object="${difficultyList}">
+                </form>
+            </div>
+            <div>
+                <div>
+                    <ul class="p-2 flex-fill bd-highlight ">
+                        <th:block th:each="difficulty : ${difficultyList}">
+                            <div>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a th:href="@{/game/difficulty(difficulty=${difficulty.name()})}">
+                                        <span th:text="${difficulty.name()}"></span>
+                                        <span style="color:greenyellow" class="close"></span></a>
+                                </li>
+                            </div>
+                        </th:block>
+                    </ul>
+                    <div th:if="${difficultyList.isEmpty()}">
+                        <div class="text-center" th:text="#{difficulty.list.empty}"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <th:block th:insert="fragments/footer :: footer"/>
+</body>
+</html>
